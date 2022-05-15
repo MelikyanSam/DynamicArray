@@ -23,6 +23,11 @@ package com.company.HomeWork.work11;
         }
 
 
+
+        public String toString(){
+            return "" + wheels;
+        }
+
     }
 
 

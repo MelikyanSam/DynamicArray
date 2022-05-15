@@ -4,26 +4,28 @@ public class Main {
     public static void main(String[] args) {
         DynamicArray one = new DynamicArray(0);
 
-        DynamicArray two = new DynamicArray();
+        DynamicArray two = new DynamicArray(one.getArr());
 
         one.add(12);
         one.add(102);
         one.add(62);
         one.add(1082);
-//        one.add(12);
-//        one.add(102);
-//        one.add(62);
-//        one.add(1082);
+
+//        two.add(12);
+//        two.add(102);
+//        two.add(62);
+//        two.add(1082);
+
 //        one.add(12);
 //        one.add(102);
 //        one.add(62);
 //        one.add(1082);
 
-        two.add(451);
-        two.add(202);
-        two.add(30);
+//        two.add(451);
+//        two.add(202);
+//        two.add(30);
 
-        one.add(2, 98);
+//        one.add(2, 98);
 //        one.add(8, 898);
 
 //        one.add(two);
@@ -44,11 +46,13 @@ public class Main {
 
 //        one.sort();
 //        one.sort(1);
-
+//        System.out.println(one.contains(two, 0, 1));
 //        one.removeByValue(102);
-        for (int i = 0; i < one.getCapacity(); i++) {
-            System.out.println(one.getArr(i));
-        }
+        one.show();
+        System.out.println("-------------------------");
+
+        one.show();
+
         System.out.println("-------------------------");
         System.out.println(one.getCapacity());
         System.out.println(one.len);

@@ -18,6 +18,16 @@ public class DynamicArray {
         arr = new int[capacity];
         len = getLen();
     }
+    DynamicArray(DynamicArray obj) {
+        capacity = obj.capacity;
+        arr = new int[capacity];
+        len = obj.len;
+    }
+    DynamicArray(int[] arr) {
+        this.capacity = arr.length ;
+        this.arr = arr;
+        len = getLen(arr);
+    }
 
 
     // Methods
@@ -55,85 +65,87 @@ public class DynamicArray {
         arr[a] = arr[b];
         arr[b] = c;
     }
-    private int[] swich(){
+    private int[] switchToAnotherArray(){
         int[] a = new int[capacity];
         for (int i = 0; i < len; i++) {
             a[i] = arr[i];
         }
         return a;
     }
-
-    public DynamicArray add(int e) {
-        if (capacity == len) {
-            capacity += 10;
-            int[] a = swich();
-            a[len++] = e;
-            arr = a;
-            return this;
-        }
-        else{
-            arr[len++] = e;
-            return this;
+    public void show(){
+        for (int i = 0; i < capacity; i++) {
+            System.out.println(arr[i]);
         }
     }
 
-    public DynamicArray add(int p, int e) {
+    public DynamicArray add(int value) {
         if (capacity == len) {
             capacity += 10;
-            int[] a = swich();
-            for (int i = p; i < len; i++) {
-                if (i >= p) {
+            int[] a = switchToAnotherArray();
+            arr = a;
+        }
+        arr[len++] = value;
+        return this;
+    }
+
+
+    public DynamicArray add(int index, int value) {
+        if (capacity == len) {
+            capacity += 10;
+            int[] a = switchToAnotherArray();
+            for (int i = index; i < len; i++) {
+                if (i >= index) {
                     a[i + 1] = arr[i];
-                    a[p] = e;
+                    a[index] = value;
                 }
             }
             arr = a;
         } else {
-            for (int j = len ,i = len+1; i > p; i--, j--) {
+            for (int j = len ,i = len+1; i > index; i--, j--) {
                     swap(j,i);
             }
-            arr[p] = e;
+            arr[index] = value;
         }
         len++;
         return this;
     }
 
-    public DynamicArray add(DynamicArray e) {
-        if (capacity - len < e.len) {
-            capacity += e.capacity;
-            int[] a = swich();
-            for (int j = 0, i = len; j < e.len; j++) {
-                a[i] = e.getArr(j);
+    public DynamicArray add(DynamicArray value) {
+        if (capacity - len < value.len) {
+            capacity += value.capacity;
+            int[] a = switchToAnotherArray();
+            for (int j = 0, i = len; j < value.len; j++) {
+                a[i] = value.getArr(j);
                 i++;
             }
-            len += e.len;
+            len += value.len;
             arr = a;
         }else {
-            for (int j = 0, i = len; j < e.len; j++) {
-                arr[i] = e.getArr(j);
+            for (int j = 0, i = len; j < value.len; j++) {
+                arr[i] = value.getArr(j);
                 i++;
             }
-            len += e.len;
+            len += value.len;
         }
         return this;
     }
 
-    public DynamicArray add(int p, DynamicArray e) {
-        if(p < 0 || p > len)
-            p  = len;
+    public DynamicArray add(int index, DynamicArray e) {
+        if(index < 0 || index > len)
+            index  = len;
 
         if ( capacity - len < e.len )
             capacity += e.capacity;
         len += e.len;
             int[] a = new int[capacity];
             for (int i = 0, j = 0; i < len; i++) {
-                if (i == p) {
+                if (i == index) {
                     for (; j < e.len; j++, i++) {
                         a[i] = e.arr[j];
                     }
                     i--;
-                } else if (i == (p + e.len)) {
-                    a[i] = arr[p++];
+                } else if (i == (index + e.len)) {
+                    a[i] = arr[index++];
                 } else
                     a[i] = arr[i];
             }
@@ -145,7 +157,7 @@ public class DynamicArray {
         int leng = getLen(e);
         if (capacity - len < leng) {
             this.capacity += e.length;
-            int[] a = swich();
+            int[] a = switchToAnotherArray();
             for (int j = 0, i = len; j < leng; j++) {
                 a[i++] = e[j];
             }
@@ -158,25 +170,25 @@ public class DynamicArray {
         len = getLen();
         return this;
     }
-    public DynamicArray add(int p, int[] e) {
+    public DynamicArray add(int index, int[] e) {
         int leng = getLen(e);
 
         if ( capacity - len < leng )
             capacity += e.length;
 
-        if(p < 0 || p > len)
+        if(index < 0 || index > len)
             add(e);
         else{
             len += leng;
             int[] a = new int[capacity];
             for (int i = 0, j = 0; i < len; i++) {
-                if (i == p) {
+                if (i == index) {
                     for (; j < leng; j++, i++) {
                         a[i] = e[j];
                     }
                     i--;
-                } else if (i == (p + leng)) {
-                    a[i] = arr[p++];
+                } else if (i == (index + leng)) {
+                    a[i] = arr[index++];
                 } else
                     a[i] = arr[i];
             }
@@ -185,12 +197,12 @@ public class DynamicArray {
         return this;
     }
 
-    public DynamicArray removeByIndex(int e) {
-        if(e < 0 || e > len)
+    public DynamicArray removeByIndex(int index) {
+        if(index < 0 || index > len)
             arr[len - 1] = 0;
         else {
             for (int i = 0; i < len; i++) {
-                if (i >= e) {
+                if (i >= index) {
                     arr[i] = arr[i + 1];
                 }
             }
@@ -199,22 +211,29 @@ public class DynamicArray {
         return this;
     }
 
-    public DynamicArray removeByValue(int e) {
-        removeByIndex(indexOf(e));
+    public DynamicArray removeByValue(int value) {
+        removeByIndex(indexOf(value));
         return this;
     }
+    public int valueOf(int index) throws ArrayIndexOutOfBoundsException{
+        if(index >= len)
+            throw new ArrayIndexOutOfBoundsException("Index is bigger than length");
+        if (index < 0)
+            throw new ArrayIndexOutOfBoundsException("Index is less than 0");
+        return arr[index];
+    }
 
-    public int indexOf(int e) {
+    public int indexOf(int value)  {
         int inx = -1;
         for (int i = 0; i < len; i++) {
-            if (arr[i] == e)
+            if (arr[i] == value)
                 inx = i;
         }
         return inx;
     }
 
-    public int lastIndexOf(int e) {
-        int inx = indexOf(e);
+    public int lastIndexOf(int value) {
+        int inx = indexOf(value);
         return len - (inx + 1);
     }
 
@@ -254,9 +273,54 @@ public class DynamicArray {
         }
         return  a;
     }
+    public boolean contains(DynamicArray e){
+        int count = 0;
+        for(int i = 0, j = 0; i < len; j++, i++){
+            if(this.arr[i] == e.getArr(j)){
+                count++;
+            }
+            if(j == e.len  - 1){
+                j = 0;
+            }
+        }
+        if (count == e.len)
+            return true;
+        return false;
+    }
+    public boolean contains(DynamicArray e,int  at, int to){
+        int count = 0;
+        for(int i = at, j = 0; i < to+1; j++, i++) {
+            if (this.arr[i] == e.getArr(j)) {
+                count++;
+            }
+            if (j == e.len - 1) {
+                j = 0;
+            }
+            if (count == (to - at + 1))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean contains(int[] arr){
+        int count = 0;
+        for(int i = 0, j = 0; i < len; j++, i++){
+            if(this.arr[i] == arr[j]){
+                count++;
+            }
+            if(j == arr.length  - 1){
+                j = 0;
+            }
+        }
+        if (count == arr.length)
+            return true;
+        return false;
+    }
 
     public static void main(String[] args) {
 
     }
+
+
 
 }

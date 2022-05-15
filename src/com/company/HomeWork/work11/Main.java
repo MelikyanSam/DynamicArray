@@ -9,6 +9,6 @@ public class Main {
         Motorcyrcle two = new Motorcyrcle();
         two.get();
 
-
+        System.out.println(new Bycicle());
     }
 }
