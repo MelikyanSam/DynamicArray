@@ -1,6 +1,6 @@
 package com.company.dyanamicArray;
 
-public class DynamicArray {
+public class DynamicArray<x> {
     public int capacity;
     public int len;
     private int[] arr;
@@ -237,22 +237,19 @@ public class DynamicArray {
         return len - (inx + 1);
     }
 
-    public int[] sort() {
+    DynamicArray sort(boolean cond) {
         int z = arr[0];
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                if (arr[j] > z) {
-                    swap(i, j);
-                    z = arr[j];
+        if (cond) {
+            for (int i = 0; i < len; i++) {
+                for (int j = 0; j < len; j++) {
+                    if (arr[j] > z) {
+                        swap(i, j);
+                        z = arr[j];
+                    }
                 }
+                z = arr[len - 1];
             }
-            z = arr[len - 1];
         }
-        return arr;
-    }
-
-    public int[] sort(int n) {
-        int z;
         for (int i = 0; i < len; i++) {
             z = arr[i];
             for (int j = 0; j < len; j++) {
@@ -262,9 +259,8 @@ public class DynamicArray {
                 }
             }
         }
-        return arr;
+        return this;
     }
-
     public boolean contains(int e) {
         boolean a = false;
         for (int i = 0; i < len; i ++){

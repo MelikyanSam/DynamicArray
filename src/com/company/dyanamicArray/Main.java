@@ -44,15 +44,11 @@ public class Main {
 //        System.out.println(one.indexOf(98) + " *");
 //        System.out.println(one.lastIndexOf(62) + " *");
 
-//        one.sort();
+        one.sort(true);
 //        one.sort(1);
 //        System.out.println(one.contains(two, 0, 1));
 //        one.removeByValue(102);
         one.show();
-        System.out.println("-------------------------");
-
-        one.show();
-
         System.out.println("-------------------------");
         System.out.println(one.getCapacity());
         System.out.println(one.len);
