@@ -88,7 +88,6 @@ public class DynamicArray<x> {
         return this;
     }
 
-
     public DynamicArray add(int index, int value) {
         if (capacity == len) {
             capacity += 10;
@@ -226,20 +225,28 @@ public class DynamicArray<x> {
     public int indexOf(int value)  {
         int inx = -1;
         for (int i = 0; i < len; i++) {
-            if (arr[i] == value)
+            if (arr[i] == value) {
                 inx = i;
+                break;
+            }
         }
         return inx;
     }
 
     public int lastIndexOf(int value) {
-        int inx = indexOf(value);
-        return len - (inx + 1);
+        int inx = -1;
+        for (int i = len-1; i < 0; i--) {
+            if (arr[i] == value) {
+                inx = i;
+                break;
+            }
+        }
+        return inx;
     }
 
-    DynamicArray sort(boolean cond) {
+    DynamicArray sort(boolean condition) {
         int z = arr[0];
-        if (cond) {
+        if (condition) {
             for (int i = 0; i < len; i++) {
                 for (int j = 0; j < len; j++) {
                     if (arr[j] > z) {
